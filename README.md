@@ -1,6 +1,4 @@
-Of course. Here is the complete, professional README.md file for your project.
-
-TestSmith AI - The Autonomous Selenium Test Engineer
+ TestSmith AI - The Autonomous Selenium Test Engineer
 1. Project Overview
 TestSmith AI is an intelligent agent designed to automate the QA testing pipeline for web applications, as per the technical assessment from myOnsite Healthcare. The system interprets natural language commands, generates Python Selenium code on the fly, executes the tests in a headless browser, and produces structured reports in both JSON and Excel formats.
 
