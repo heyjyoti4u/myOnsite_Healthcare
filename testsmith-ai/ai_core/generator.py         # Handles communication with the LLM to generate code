@@ -1,0 +1,50 @@
+# ai_core/generator.py
+
+import os
+import google.generativeai as genai
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Configure the Gemini API client
+# Make sure your API key is set in the .env file
+try:
+    genai.configure(api_key=os.getenv("AIzaSyBqZIS6ybNxWi3o7iE_IDlsLRR87FNZSh0"))
+except TypeError:
+    print("❌ ERROR: Have you created the .env file and added your GOOGLE_API_KEY?")
+    exit()
+
+
+def generate_selenium_code(command: str) -> str:
+    """
+    Uses Google Gemini to generate Python Selenium code from a natural language command.
+    """
+    print("🤖 Generating Selenium code with Google Gemini for command:", command)
+
+    # This prompt is crucial. It tells the AI exactly what you want.
+    prompt = f"""
+    You are an expert Python Selenium code generator.
+    Based on the user's command, write a Python script that uses the 'selenium' library to perform the web automation task.
+    The script should be self-contained and ready to execute.
+    The script MUST use a webdriver instance named 'driver'. Do not create a new one.
+    Do not include any explanation, comments, markdown formatting, or introductory text.
+    Only output the raw Python code itself.
+
+    User Command: "{command}"
+    """
+
+    try:
+        # Initialize the model
+        model = genai.GenerativeModel('gemini-pro')
+        
+        # Generate the code
+        response = model.generate_content(prompt)
+        
+        # Clean up the output to ensure it's just code
+        generated_code = response.text.strip().replace("```python", "").replace("```", "").strip()
+        
+        print("✅ Code generated successfully.")
+        return generated_code
+    except Exception as e:
+        print(f"❌ Error generating code with Gemini: {e}")
+        return ""

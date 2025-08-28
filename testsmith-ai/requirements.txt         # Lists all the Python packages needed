@@ -1,0 +1,6 @@
+# To install these, run: pip install -r requirements.txt
+selenium
+openai # Or google-generativeai for Gemini
+python-dotenv
+pandas
+openpyxl

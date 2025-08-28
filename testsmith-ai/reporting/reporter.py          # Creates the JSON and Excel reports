@@ -1,0 +1,31 @@
+import json
+import pandas as pd
+import time
+
+def create_report(test_name: str, description: str, result: dict):
+    """
+    Generates JSON and Excel reports from the test execution result.
+    """
+    print("📝 Generating reports...")
+    report_data = {
+        "Test Name": test_name,
+        "Description": description,
+        "Status": result["status"],
+        "Error": result["error"],
+        "Screenshot link": result["screenshot"]
+    } # [cite: 60]
+
+    timestamp = int(time.time())
+    base_filename = f"outputs/reports/{test_name.replace(' ', '_')}_{timestamp}"
+
+    # Generate JSON report
+    json_path = f"{base_filename}.json"
+    with open(json_path, 'w') as f:
+        json.dump(report_data, f, indent=4)
+    print(f"📄 JSON report saved to {json_path}")
+
+    # Generate Excel report
+    excel_path = f"{base_filename}.xlsx"
+    df = pd.DataFrame([report_data])
+    df.to_excel(excel_path, index=False)
+    print(f"📊 Excel report saved to {excel_path}")
